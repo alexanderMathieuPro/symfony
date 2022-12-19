@@ -1,6 +1,7 @@
 <?php 
 namespace App\Controller;
 
+use function Symfony\Component\String\u;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,8 +14,15 @@ class VinylController{
     }
 
     #[Route('/browse/{genre}')]
-    public function browse($genre): Response
+    public function browse(string $genre = null): Response
     {
-        return new Response('Genre :'.$genre);
+        if($genre){
+            $title = 'Genre : '. u(str_replace('-', ' ', $genre))->title(true);
+        }
+        else{
+            $title = 'Tout les genres';
+        }
+
+        return new Response($title);
     }
 }
